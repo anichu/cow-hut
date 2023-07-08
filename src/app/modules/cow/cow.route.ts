@@ -11,4 +11,7 @@ cowRouter
 		validateRequest(CowValidation.createCowZodSchema),
 		CowController.createCow
 	);
+
+cowRouter.route("/:id").get(CowController.getSingleCow);
+
 export default cowRouter;

@@ -20,6 +20,30 @@ const createCow = catchAsync(
 	}
 );
 
+const getSingleCow = catchAsync(
+	async (req: Request, res: Response, next: NextFunction) => {
+		const id = req.params.id;
+		const result = await CowService.getSingleCow(id);
+
+		if (result) {
+			sendResponse<ICow>(res, {
+				statusCode: httpStatus.OK,
+				success: true,
+				message: "Cow retrieved successfully",
+				data: result,
+			});
+		} else {
+			sendResponse<ICow>(res, {
+				statusCode: httpStatus.NOT_FOUND,
+				success: false,
+				message: "Cow not found",
+				data: null,
+			});
+		}
+	}
+);
+
 export const CowController = {
 	createCow,
+	getSingleCow,
 };
