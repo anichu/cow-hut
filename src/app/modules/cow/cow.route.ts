@@ -12,6 +12,9 @@ cowRouter
 		CowController.createCow
 	);
 
-cowRouter.route("/:id").get(CowController.getSingleCow);
+cowRouter
+	.route("/:id")
+	.get(CowController.getSingleCow)
+	.delete(CowController.deleteCow);
 
 export default cowRouter;

@@ -14,7 +14,13 @@ const getSingleCow = async (id: string): Promise<ICow | null> => {
 	return result;
 };
 
+const deleteCow = async (id: string): Promise<ICow | null> => {
+	const result = await Cow.findByIdAndDelete(id);
+	return result;
+};
+
 export const CowService = {
 	createCow,
 	getSingleCow,
+	deleteCow,
 };
