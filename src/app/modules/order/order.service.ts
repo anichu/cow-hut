@@ -6,6 +6,20 @@ export const createOrder = async (payload: IOrder): Promise<IOrder> => {
 	return result;
 };
 
+export const getOrders = async (): Promise<IOrder[] | []> => {
+	const result = await Order.find({})
+		.populate({
+			path: "buyer",
+			model: "User",
+		})
+		.populate({
+			path: "cow",
+			model: "Cow",
+		});
+	return result;
+};
+
 export const OrderService = {
 	createOrder,
+	getOrders,
 };

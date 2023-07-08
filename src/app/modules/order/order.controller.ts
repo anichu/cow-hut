@@ -19,7 +19,21 @@ const createOrder = catchAsync(
 		// next();
 	}
 );
+const getOrders = catchAsync(
+	async (req: Request, res: Response, next: NextFunction) => {
+		const result = await OrderService.getOrders();
+
+		sendResponse<IOrder[]>(res, {
+			statusCode: httpStatus.OK,
+			success: true,
+			message: "Orders retrieve successfully",
+			data: result || [],
+		});
+		// next();
+	}
+);
 
 export const OrderController = {
 	createOrder,
+	getOrders,
 };

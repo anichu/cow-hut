@@ -10,6 +10,7 @@ orderRouter
 	.post(
 		validateRequest(OrderValidation.createOrderZodSchema),
 		OrderController.createOrder
-	);
+	)
+	.get(OrderController.getOrders);
 
 export default orderRouter;
