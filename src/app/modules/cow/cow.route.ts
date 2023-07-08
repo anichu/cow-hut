@@ -15,6 +15,10 @@ cowRouter
 cowRouter
 	.route("/:id")
 	.get(CowController.getSingleCow)
-	.delete(CowController.deleteCow);
+	.delete(CowController.deleteCow)
+	.patch(
+		validateRequest(CowValidation.updateZodSchema),
+		CowController.updateCow
+	);
 
 export default cowRouter;

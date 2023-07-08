@@ -19,8 +19,17 @@ const deleteCow = async (id: string): Promise<ICow | null> => {
 	return result;
 };
 
+const updateCow = async (
+	id: string,
+	payload: Partial<ICow>
+): Promise<ICow | null> => {
+	const result = await Cow.findByIdAndUpdate(id, payload, { new: true });
+	return result;
+};
+
 export const CowService = {
 	createCow,
 	getSingleCow,
 	deleteCow,
+	updateCow,
 };

@@ -66,8 +66,33 @@ const deleteCow = catchAsync(
 	}
 );
 
+const updateCow = catchAsync(
+	async (req: Request, res: Response, next: NextFunction) => {
+		const id = req.params.id;
+		const updatedCow = req.body;
+		const result = await CowService.updateCow(id, updatedCow);
+
+		if (result) {
+			sendResponse<ICow>(res, {
+				statusCode: httpStatus.OK,
+				success: true,
+				message: "Cow updated successfully",
+				data: result,
+			});
+		} else {
+			sendResponse<ICow>(res, {
+				statusCode: httpStatus.NOT_FOUND,
+				success: false,
+				message: "Cow not found",
+				data: null,
+			});
+		}
+	}
+);
+
 export const CowController = {
 	createCow,
 	getSingleCow,
 	deleteCow,
+	updateCow,
 };
