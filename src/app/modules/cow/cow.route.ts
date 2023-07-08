@@ -10,8 +10,8 @@ cowRouter
 	.post(
 		validateRequest(CowValidation.createCowZodSchema),
 		CowController.createCow
-	);
-
+	)
+	.get(CowController.getAllCows);
 cowRouter
 	.route("/:id")
 	.get(CowController.getSingleCow)

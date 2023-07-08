@@ -1,9 +1,15 @@
 import { NextFunction, Request, Response } from "express";
 import catchAsync from "../../../shared/catchAsync";
-import { sendResponse } from "../../../shared/sendResponse";
+import {
+	sendResponse,
+	sendResponseWithPagination,
+} from "../../../shared/sendResponse";
 import { ICow } from "./cow.interface";
 import { CowService } from "./cow.service";
 import httpStatus from "http-status";
+import { CowFilterableFields } from "./cow.constant";
+import { paginationFields } from "../../../constant/pagination";
+import pick from "../../../shared/pick";
 
 const createCow = catchAsync(
 	async (req: Request, res: Response, next: NextFunction) => {
@@ -17,6 +23,22 @@ const createCow = catchAsync(
 			data: result,
 		});
 		// next();
+	}
+);
+
+const getAllCows = catchAsync(
+	async (req: Request, res: Response, next: NextFunction) => {
+		const filters = pick(req.query, CowFilterableFields);
+		const paginationOptions = pick(req.query, paginationFields);
+		const result = await CowService.getAllCows(filters, paginationOptions);
+
+		sendResponseWithPagination<ICow[]>(res, {
+			statusCode: httpStatus.OK,
+			success: true,
+			meta: result.meta,
+			message: "Cows retrieved successfully",
+			data: result.data,
+		});
 	}
 );
 
@@ -95,4 +117,5 @@ export const CowController = {
 	getSingleCow,
 	deleteCow,
 	updateCow,
+	getAllCows,
 };
